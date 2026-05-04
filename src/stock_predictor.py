@@ -10,6 +10,7 @@ data = yf.download(
     start="2020-01-01",
     end="2026-01-01"
 )
+data.columns = data.columns.get_level_values(0) # flatten the column names if they are multi-level
 
 print("First 5 rows:")
 print(data.head()) # display the first 5 rows of the dataset to get overview of the data
