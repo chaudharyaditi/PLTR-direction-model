@@ -24,6 +24,13 @@ data["MA_20"] = data["Close"].rolling(20).mean()
 # volatility (5-day std of returns) (risk indicator)
 data["Volatility"] = data["Return"].rolling(5).std()
 
+# target variable:
+# if tomorrow's price > today's price, 1
+# else, 0
+data["Target"] = (data["Close"].shift(-1) > data["Close"]).astype(int)
+print("\nWith target column:")
+print(data[["Close", "Target"]].head())
+
 # drop rows with NaN from rolling calculations
 data = data.dropna()
 
