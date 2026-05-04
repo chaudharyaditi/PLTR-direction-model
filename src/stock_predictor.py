@@ -12,6 +12,24 @@ data = yf.download(
 )
 data.columns = data.columns.get_level_values(0) # flatten the column names if they are multi-level
 
+# daily return (momentum)
+data["Return"] = data["Close"].pct_change()
+
+# 5-day moving average (trend indicator)
+data["MA_5"] = data["Close"].rolling(5).mean()
+
+# 20-day moving average (trend indicator)
+data["MA_20"] = data["Close"].rolling(20).mean()
+
+# volatility (5-day std of returns) (risk indicator)
+data["Volatility"] = data["Return"].rolling(5).std()
+
+# drop rows with NaN from rolling calculations
+data = data.dropna()
+
+print("\nAfter feature engineering:")
+print(data.head())
+
 print("First 5 rows:")
 print(data.head()) # display the first 5 rows of the dataset to get overview of the data
 
