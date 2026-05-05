@@ -34,6 +34,40 @@ print(data[["Close", "Target"]].head())
 # drop rows with NaN from rolling calculations
 data = data.dropna()
 
+# features to use
+features = ["Return", "MA_5", "MA_20", "Volatility", "Volume"]
+
+# we have to shift features so we only use past data
+data[features] = data[features].shift(1)
+data = data.dropna()
+
+X = data[features]
+y = data["Target"]
+
+# split data into training and testing sets (80% train, 20% test)
+split_index = int(len(data) * 0.8)
+
+X_train = X.iloc[:split_index]
+X_test = X.iloc[split_index:]
+
+y_train = y.iloc[:split_index]
+y_test = y.iloc[split_index:]
+
+# train
+from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# evaluate the model
+from sklearn.metrics import accuracy_score, classification_report
+
+predictions = model.predict(X_test)
+
+print("\nModel Accuracy:", accuracy_score(y_test, predictions))
+print("\nClassification Report:")
+print(classification_report(y_test, predictions))
+
 print("\nAfter feature engineering:")
 print(data.head())
 
