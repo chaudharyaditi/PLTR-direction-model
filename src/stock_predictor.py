@@ -112,6 +112,13 @@ def evaluate_model(model, X_test, y_test):
     print("\nClassification Report:")
     print(classification_report(y_test, predictions))
 
+    # save model results
+    with open("results/model_results.txt", "w") as f:
+        f.write(f"Ticker: {TICKER}\n")
+        f.write(f"Model Accuracy: {accuracy_score(y_test, predictions)}\n\n")
+        f.write("Classification Report:\n")
+        f.write(classification_report(y_test, predictions))
+
     return predictions
 
 
@@ -123,6 +130,7 @@ def plot_feature_importance(model, features):
     plt.barh(features, importances)
     plt.title("Feature Importance")
     plt.xlabel("Importance")
+    plt.savefig("images/feature_importance.png")  # SAVE
     plt.show()
 
 
@@ -154,6 +162,7 @@ def plot_closing_price(data):
     plt.xlabel("Date")
     plt.ylabel("Closing Price")
     plt.grid(True)
+    plt.savefig("images/closing_price.png")  # SAVE
     plt.show()
 
 
@@ -179,7 +188,15 @@ def backtest_strategy(data, split_index, predictions):
     plt.plot(test_data.index, test_data["Cumulative_Market"], label="Market")
     plt.legend()
     plt.title("Strategy vs Market Performance")
+    plt.savefig("images/strategy_vs_market.png")  # SAVE
     plt.show()
+
+    strategy_return = test_data["Cumulative_Strategy"].iloc[-1]
+    market_return = test_data["Cumulative_Market"].iloc[-1]
+
+    with open("results/backtest_results.txt", "w") as f:
+        f.write(f"Strategy Final Return: {strategy_return}\n")
+        f.write(f"Market Final Return: {market_return}\n")
 
 
 def main():

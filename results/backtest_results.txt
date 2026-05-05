@@ -1,0 +1,2 @@
+Strategy Final Return: 2.6789216327424845
+Market Final Return: 2.3772840418480428
