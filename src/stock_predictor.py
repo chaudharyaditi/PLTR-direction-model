@@ -24,6 +24,15 @@ data["MA_20"] = data["Close"].rolling(20).mean()
 # volatility (5-day std of returns) (risk indicator)
 data["Volatility"] = data["Return"].rolling(5).std()
 
+# volume change (momentum in trading activity)
+data["Volume_Change"] = data["Volume"].pct_change()
+
+# moving average ratio (trend strength)
+data["MA_Ratio"] = data["MA_5"] / data["MA_20"]
+
+# price momentum over 3 days
+data["Momentum_3"] = data["Close"] / data["Close"].shift(3)
+
 # target variable:
 # if tomorrow's price > today's price, 1
 # else, 0
@@ -35,7 +44,7 @@ print(data[["Close", "Target"]].head())
 data = data.dropna()
 
 # features to use
-features = ["Return", "MA_5", "MA_20", "Volatility", "Volume"]
+features = ["Return", "MA_5", "MA_20", "Volatility", "Volume_Change", "MA_Ratio", "Momentum_3"]
 
 # we have to shift features so we only use past data
 data[features] = data[features].shift(1)
