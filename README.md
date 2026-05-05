@@ -1,11 +1,12 @@
-# PLTR Direction Model
+# Stock Direction Model
 
 ## Overview
 
-This project builds a machine learning pipeline to predict the **next-day price direction** (up/down) of a volatile stock, Palantir (PLTR), using historical stock data and technical indicators.
+This project builds a machine learning pipeline to predict the **next-day price direction** (up/down) of a stock using historical price data and technical indicators.
+
+A relatively volatile asset, Palantir (PLTR), is used as the primary test case to evaluate how well the model performs under higher-noise conditions.
 
 The goal is not to predict exact prices, but to classify short-term movement and evaluate whether these predictions can be translated into a **profitable trading strategy** through backtesting.
-
 ---
 
 ## Dataset
