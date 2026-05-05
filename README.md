@@ -7,6 +7,7 @@ This project builds a machine learning pipeline to predict the **next-day price 
 A relatively volatile asset, Palantir (PLTR), is used as the primary test case to evaluate how well the model performs under higher-noise conditions.
 
 The goal is not to predict exact prices, but to classify short-term movement and evaluate whether these predictions can be translated into a **profitable trading strategy** through backtesting.
+
 ---
 
 ## Dataset
