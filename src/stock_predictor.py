@@ -77,6 +77,17 @@ print("\nModel Accuracy:", accuracy_score(y_test, predictions))
 print("\nClassification Report:")
 print(classification_report(y_test, predictions))
 
+# feature importance
+import matplotlib.pyplot as plt
+
+importances = model.feature_importances_
+
+plt.figure(figsize=(8, 5))
+plt.barh(features, importances)
+plt.title("Feature Importance")
+plt.xlabel("Importance")
+plt.show()
+
 print("\nAfter feature engineering:")
 print(data.head())
 
