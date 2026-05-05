@@ -114,3 +114,26 @@ plt.xlabel("Date")
 plt.ylabel("Closing Price")
 plt.grid(True)
 plt.show()
+
+# backtesting
+# simulating: if model predicts UP, buy
+# else, do nothing
+test_data = data.iloc[split_index:].copy()
+test_data["Prediction"] = predictions
+
+# strategy returns:
+# if prediction = 1 → take next day's return
+# else → 0
+test_data["Strategy_Return"] = test_data["Return"] * test_data["Prediction"]
+
+# cumulative returns
+test_data["Cumulative_Strategy"] = (1 + test_data["Strategy_Return"]).cumprod()
+test_data["Cumulative_Market"] = (1 + test_data["Return"]).cumprod()
+
+# plot
+plt.figure(figsize=(10, 5))
+plt.plot(test_data.index, test_data["Cumulative_Strategy"], label="Strategy")
+plt.plot(test_data.index, test_data["Cumulative_Market"], label="Market")
+plt.legend()
+plt.title("Strategy vs Market Performance")
+plt.show()
